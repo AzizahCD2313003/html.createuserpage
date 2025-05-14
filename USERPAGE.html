@@ -43,14 +43,19 @@
       text-decoration: none;
       color: #000;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .main {
       flex: 1;
-      display: flex;
+      display: none;
       flex-direction: column;
       padding: 20px;
       background-color: #fff;
+    }
+
+    .active {
+      display: flex !important;
     }
 
     .search-bar input {
@@ -113,11 +118,11 @@
     }
 
     .status.Aktif {
-      color: green;
+      color: rgb(2, 2, 2);
     }
 
     .status.Suspended {
-      color: red;
+      color: rgb(2, 2, 2);
     }
 
     .add-button {
@@ -134,26 +139,89 @@
       cursor: pointer;
     }
 
+    .access-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .access-table th, .access-table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .access-table th {
+      background-color: #f0f0f0;
+    }
+
+    .login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fff;
+    }
+
+    .login-box {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background-color: #111;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <div id="login-form" class="login-screen">
+    <div class="login-box">
+      <h1>Connect With Us</h1>
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button id="login-btn">Sign In</button>
+    </div>
+  </div>
+
+  <div id="dashboard" class="container" style="display: none;">
     <div class="sidebar">
       <h2>Connect</h2>
       <nav>
-        <a href="#">👤 User</a>
-        <a href="#">🔐 Hak Akses</a>
-        <a href="#">↩️ Logout</a>
+        <a id="menu-user">👤 User</a>
+        <a id="menu-hakakses">🔐 Hak Akses</a>
+        <a id="menu-logout">↩️ Logout</a>
       </nav>
     </div>
 
-    <div class="main">
+    <div id="user-section" class="main active">
       <div class="search-bar">
         <input type="text" placeholder="Cari user">
       </div>
 
       <div class="user-list">
-        <!-- User 1 -->
         <div class="user-card">
           <div class="user-info">
             <div class="user-name">Rahmat Saudi Al Fathir As</div>
@@ -204,6 +272,73 @@
         <button>＋</button>
       </div>
     </div>
+
+    <div id="hakakses-section" class="main">
+      <div class="search-bar">
+        <input type="text" placeholder="Cari Hak Akses">
+      </div>
+
+      <div class="access-table">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Hak Akses</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Employee</td>
+              <td>✏️ 🗑️</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Admin</td>
+              <td>✏️ 🗑️</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="add-button">
+        <button>＋</button>
+      </div>
+    </div>
   </div>
+
+  <script>
+    const loginForm = document.getElementById("login-form");
+    const dashboard = document.getElementById("dashboard");
+    const loginBtn = document.getElementById("login-btn");
+
+    const menuUser = document.getElementById("menu-user");
+    const menuHakakses = document.getElementById("menu-hakakses");
+    const menuLogout = document.getElementById("menu-logout");
+
+    const userSection = document.getElementById("user-section");
+    const hakaksesSection = document.getElementById("hakakses-section");
+
+    loginBtn.addEventListener("click", () => {
+      loginForm.style.display = "none";
+      dashboard.style.display = "flex";
+    });
+
+    menuLogout.addEventListener("click", () => {
+      dashboard.style.display = "none";
+      loginForm.style.display = "flex";
+    });
+
+    menuUser.addEventListener("click", () => {
+      userSection.classList.add("active");
+      hakaksesSection.classList.remove("active");
+    });
+
+    menuHakakses.addEventListener("click", () => {
+      hakaksesSection.classList.add("active");
+      userSection.classList.remove("active");
+    });
+  </script>
 </body>
 </html>
